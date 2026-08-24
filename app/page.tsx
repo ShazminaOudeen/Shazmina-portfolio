@@ -1,5 +1,5 @@
 import Preloader from "@/components/sections/Preloader";
-import ThemeToggle from "@/components/layout/ThemeToggle";
+
 export default function Home() {
   return (
      <>

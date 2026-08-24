@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Archivo_Black, IBM_Plex_Sans } from "next/font/google";
+import { Archivo_Black, IBM_Plex_Sans, Caveat } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/lib/theme";
+
+const caveat = Caveat({
+  weight: "700",
+  subsets: ["latin"],
+  variable: "--font-signature",
+});
 
 const archivoBlack = Archivo_Black({
   weight: "400",

@@ -16,6 +16,7 @@
   /* Fonts */
   --font-heading: "Anton", sans-serif;
   --font-body: "Inter", sans-serif;
+  --font-signature: var(--font-signature), cursive;
 
   /* Custom hard shadows (neobrutalism) */
   --shadow-brutal-sm: 3px 3px 0px 0px var(--color-ink);

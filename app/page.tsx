@@ -1,10 +1,12 @@
+import Preloader from "@/components/sections/Preloader";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 export default function Home() {
   return (
-    <main className="min-h-screen bg-washi dark:bg-ink flex items-center justify-center">
-      <h1 className="text-4xl font-heading text-blade">
-        Theme Test
-      </h1>
-     
-    </main>
+     <>
+      <Preloader />
+      <main className="min-h-screen bg-washi dark:bg-ink">
+        {/* sections go here */}
+      </main>
+    </>
   );
 }

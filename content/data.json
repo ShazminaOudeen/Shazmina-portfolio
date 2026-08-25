@@ -78,17 +78,24 @@
   ]
 },
   "projects": [
-    {
-      "slug": "",
-      "title": "",
-      "description": "",
-      "tech": [],
-      "images": [],
-      "youtubeLink": "",
-      "liveLink": "",
-      "repoLink": ""
-    }
+  {
+    
+  "slug": "portfolio-website",
+  "title": "Personal Portfolio Website",
+  "description": "Full write-up here...",
+  "tech": ["Next.js", "Tailwind CSS", "TypeScript"],
+  "images": [
+    "/images/project1-1.jpg",
+    "/images/project1-2.jpg",
+    "/images/project1-3.jpg",
+    "/images/project1-4.jpg"
   ],
+  "youtubeLink": "https://youtube.com/watch?v=yourVideoId",
+  "liveLink": "https://your-live-url.vercel.app",
+  "repoLink": "https://github.com/ShazminaOudeen/Shazmina-portfolio"
+}
+  
+],
   "blog": [
     {
       "title": "",

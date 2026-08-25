@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Chip from "@/components/ui/Chip";
 import data from "@/content/data.json";
 
 export default function About() {
@@ -11,8 +12,7 @@ export default function About() {
       className="relative py-20 md:py-28 px-4 md:px-8 bg-washi dark:bg-ink transition-colors overflow-hidden"
     >
       <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_1.3fr] gap-10 md:gap-16 items-center">
-        {/* Image side - bordered card with offset shadow block behind it,
-            same visual language as the Hero photo treatment */}
+        {/* Image side - floating transparent cutout, matches Hero photo language */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -63,32 +63,19 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Quick fact chips - pulled from data.json */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-wrap gap-3"
-          >
+          {/* Quick fact chips - now using the shared Chip component,
+              same one used in Skills, keeps styling consistent everywhere */}
+          <div className="flex flex-wrap gap-3">
             {data.personal.quickFacts.map((fact, i) => (
-              <motion.span
+              <Chip
                 key={fact}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.4, delay: 0.25 + i * 0.08 }}
-                whileHover={{ x: 2, y: 2 }}
-                className={`px-4 py-2 border-2 border-ink dark:border-washi font-body text-sm font-semibold shadow-brutal-sm transition-transform ${
-                  i % 2 === 0
-                    ? "bg-blade text-washi"
-                    : "bg-surface dark:bg-[#161616] text-ink dark:text-washi"
-                }`}
+                variant={i % 2 === 0 ? "filled" : "outline"}
+                delay={0.25 + i * 0.08}
               >
                 {fact}
-              </motion.span>
+              </Chip>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

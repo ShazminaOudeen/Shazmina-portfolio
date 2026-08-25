@@ -8,7 +8,8 @@
     "cv": "https://res.cloudinary.com/yourcloud/raw/upload/cv-shazmina.pdf",
     "email": "your@email.com",
     "github": "https://github.com/ShazminaOudeen",
-  "linkedin": "https://linkedin.com/in/yourprofile"
+  "linkedin": "https://linkedin.com/in/yourprofile",
+   "quickFacts": ["Based in Sri Lanka", "Frontend Focused", "Always Learning"]
   },
   "skills": ["React", "Next.js", "Tailwind CSS", "TypeScript"],
   "timeline": [

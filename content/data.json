@@ -5,7 +5,10 @@
     "tagline": "Building clean, functional interfaces",
     "bio": "A short paragraph about yourself.",
     "photo": "",
-    "cv": "https://res.cloudinary.com/yourcloud/raw/upload/cv-shazmina.pdf"
+    "cv": "https://res.cloudinary.com/yourcloud/raw/upload/cv-shazmina.pdf",
+    "email": "your@email.com",
+    "github": "https://github.com/ShazminaOudeen",
+  "linkedin": "https://linkedin.com/in/yourprofile"
   },
   "skills": ["React", "Next.js", "Tailwind CSS", "TypeScript"],
   "timeline": [

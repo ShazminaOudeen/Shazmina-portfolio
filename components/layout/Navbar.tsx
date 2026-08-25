@@ -56,7 +56,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="relative font-body font-medium text-ink dark:text-washi hover:text-blade dark:hover:text-blade-light transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[3px] after:w-0 after:bg-blade dark:after:bg-blade-light hover:after:w-full after:transition-all"
+                  className="relative font-body font-medium text-ink dark:text-washi hover:text-blade dark:hover:text-blade-light transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.75 after:w-0 after:bg-blade dark:after:bg-blade-light hover:after:w-full after:transition-all"
                 >
                   {link.label}
                 </a>
@@ -90,7 +90,7 @@ export default function Navbar() {
 
       {/* Mobile full-screen menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[60] bg-ink flex flex-col">
+        <div className="fixed inset-0 z-60 bg-ink flex flex-col">
           <div className="flex items-center justify-between gap-3 px-4 h-16 border-b-4 border-washi shrink-0">
             <span className="font-heading text-sm xs:text-base sm:text-lg text-washi tracking-wide truncate">
               {data.personal.name.toUpperCase()}

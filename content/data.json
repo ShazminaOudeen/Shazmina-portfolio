@@ -18,15 +18,65 @@
   "databases": ["MongoDB", "MySQL"],
   "concepts": ["REST APIs", "Responsive Design", "Agile", "Version Control"]
 },
-  "timeline": [
+  "timeline": {
+  "work": [],
+
+
+  "education": [
+  {
+    "title": "BSc (Hons) in Software Engineering",
+    "org": "Your University",
+    "dateRange": "2023 - Present",
+    "description": "Relevant coursework and focus areas here.",
+    "gpa": "3.6",
+    "highlights": ["Dean's List — 4 times", "University Scholarship"],
+    "image": "",
+    "link": ""
+  }
+],
+  "certifications": [
     {
-      "type": "work",
-      "title": "",
-      "org": "",
-      "dateRange": "",
-      "description": ""
+      "title": "Responsive Web Design",
+      "org": "freeCodeCamp",
+      "dateRange": "2025",
+      "description": "Certificate covering HTML, CSS, and responsive layout techniques.",
+      "image": "/images/cert-rwd.jpg",
+      "link": "https://freecodecamp.org/certification/..."
     }
   ],
+  "achievements": [
+    {
+      "title": "Dean's List",
+      "org": "Your University",
+      "dateRange": "2023 - 2025",
+      "description": "Awarded for academic excellence, 4 semesters.",
+      "image": "/images/deans-list-cert.jpg",
+      "link": ""
+    },
+    {
+      "title": "University Scholarship",
+      "org": "Your University",
+      "dateRange": "2023",
+      "description": "Merit-based scholarship recipient.",
+      "images": [
+    "/images/deans-list-1.jpg",
+    "/images/deans-list-2.jpg",
+    "/images/deans-list-3.jpg"
+  ],
+      "link": ""
+    }
+  ],
+  "volunteering": [
+    {
+      "title": "Team Lead",
+      "org": "Your Club/Organization",
+      "dateRange": "2024 - 2025",
+      "description": "What you did, impact, responsibilities.",
+       "images": ["/images/deans-1.jpg", "/images/deans-2.jpg", "/images/deans-3.jpg"],
+      "link": ""
+    }
+  ]
+},
   "projects": [
     {
       "slug": "",

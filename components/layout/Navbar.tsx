@@ -91,38 +91,38 @@ export default function Navbar() {
       {/* Mobile full-screen menu */}
       {mobileOpen && (
         <div className="fixed inset-0 z-[60] bg-ink flex flex-col">
-          <div className="flex items-center justify-between px-4 h-16 border-b-4 border-washi">
-            <span className="font-heading text-lg text-washi tracking-wide">
+          <div className="flex items-center justify-between gap-3 px-4 h-16 border-b-4 border-washi shrink-0">
+            <span className="font-heading text-sm xs:text-base sm:text-lg text-washi tracking-wide truncate">
               {data.personal.name.toUpperCase()}
             </span>
             <button
-              className="w-10 h-10 flex items-center justify-center border-2 border-washi text-washi press-effect"
+              className="w-10 h-10 shrink-0 flex items-center justify-center border-2 border-washi text-washi press-effect"
               onClick={() => setMobileOpen(false)}
               aria-label="Close menu"
             >
               <X size={20} strokeWidth={2.5} />
             </button>
           </div>
-          <ul className="flex-1 flex flex-col items-center justify-center gap-8">
+          <ul className="flex-1 flex flex-col items-center justify-center gap-6 sm:gap-8 px-6">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="font-heading text-3xl text-washi hover:text-blade-light transition-colors"
+                  className="font-heading text-2xl sm:text-3xl text-washi hover:text-blade-light transition-colors"
                 >
                   {link.label}
                 </a>
               </li>
             ))}
-            <li>
+            <li className="mt-2">
               <a
                 href={data.personal.cv}
                 download
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 px-6 h-12 border-2 border-washi bg-blade text-washi font-body font-semibold"
+                className="flex items-center gap-2 px-6 h-12 border-2 border-washi bg-blade text-washi font-body font-semibold shadow-brutal-sm press-effect"
               >
                 <Download size={18} strokeWidth={2.5} />
                 Download CV

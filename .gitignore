@@ -39,7 +39,7 @@ pnpm-debug.log*
 next-env.d.ts
 
 # Project-specific: real personal content (keep data.example.json committed)
-content/data.json
+#content/data.json
 
 # Editor/IDE
 .vscode/*

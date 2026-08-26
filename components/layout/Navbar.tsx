@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { Menu, X, Download } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import data from "@/content/data.json";
 
 const NAV_LINKS = [
-  { label: "Home", href: "#top" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#timeline" },
@@ -43,13 +41,15 @@ export default function Navbar() {
         {/* Full-width edge-to-edge padding instead of a centered max-w container,
             so name and controls sit right at the screen corners */}
         <div className="relative w-full px-4 sm:px-6 md:px-10 h-16 md:h-20 flex items-center justify-between">
-          {/* Logo / Name - pulled from data.json, not hardcoded */}
-          <Link
+          {/* Logo / Name - pulled from data.json, not hardcoded. Plain <a>
+              tag (not next/link's Link) to match the other nav links and
+              ensure the same-page hash scroll actually works. */}
+          <a
             href="#top"
             className="font-heading text-base sm:text-lg md:text-2xl tracking-wide text-ink dark:text-washi whitespace-nowrap shrink-0"
           >
             {data.personal.name.toUpperCase()}
-          </Link>
+          </a>
 
           {/* Desktop nav links - absolutely centered in the bar regardless of
               how wide the name or right-side controls are */}

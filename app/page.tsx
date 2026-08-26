@@ -6,6 +6,7 @@ import Skills from "@/components/sections/Skills";
 import Timeline from "@/components/sections/Timeline";
 import Projects from "@/components/sections/Projects";
 import Blog from "@/components/sections/Blog";
+import Contact from "@/components/sections/Contact";
 import Footer from "@/components/layout/Footer";
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <Timeline />
         <Projects />
         <Blog />
+        <Contact />
         {/* About, Skills, Timeline, Projects, Blog, Contact go here */}
       </main>
       <Footer />

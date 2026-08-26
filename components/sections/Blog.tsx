@@ -15,9 +15,9 @@ export default function Blog() {
   return (
     <section
       id="publications"
-      className="relative py-20 md:py-28 px-4 md:px-8 bg-washi dark:bg-ink transition-colors"
+      className="relative py-14 md:py-20 px-4 md:px-8 bg-washi dark:bg-ink transition-colors"
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}

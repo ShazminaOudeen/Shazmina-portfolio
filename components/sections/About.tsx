@@ -9,9 +9,9 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative py-20 md:py-28 px-4 md:px-8 bg-washi dark:bg-ink transition-colors overflow-hidden"
+      className="relative py-14 md:py-20 px-4 md:px-8 bg-washi dark:bg-ink transition-colors overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_1.3fr] gap-10 md:gap-16 items-center">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.3fr] gap-10 md:gap-16 items-center">
         {/* Image side - floating transparent cutout, matches Hero photo language */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}

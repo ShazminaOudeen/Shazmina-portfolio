@@ -87,7 +87,7 @@ export default function Navbar() {
 
       {/* Mobile full-screen menu - now theme-aware instead of hardcoded black */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-60 bg-washi dark:bg-ink flex flex-col transition-colors">
+        <div className="fixed inset-0 h-dvh z-60 bg-washi dark:bg-ink flex flex-col transition-colors">
           <div className="flex items-center justify-between gap-3 px-4 h-16 border-b-4 border-ink dark:border-washi shrink-0">
             <span className="font-heading text-lg sm:text-xl text-ink dark:text-washi tracking-wide truncate">
               {data.personal.name.toUpperCase()}

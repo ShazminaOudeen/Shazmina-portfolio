@@ -97,11 +97,12 @@
   
 ],
   "blog": [
-    {
-      "title": "",
-      "date": "",
-      "excerpt": "",
-      "mediumUrl": ""
-    }
-  ]
+  {
+    "title": "What I Learned Building My Portfolio",
+    "date": "Aug 2026",
+    "excerpt": "A few things that surprised me...",
+    "mediumUrl": "https://medium.com/@yourname/your-article-slug",
+    "coverImage": "/images/blog-post-1.jpg"
+  }
+]
 }

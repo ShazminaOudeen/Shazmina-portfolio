@@ -7,10 +7,12 @@ import ThemeToggle from "./ThemeToggle";
 import data from "@/content/data.json";
 
 const NAV_LINKS = [
+  { label: "Home", href: "#top" },
   { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#timeline" },
   { label: "Projects", href: "#projects" },
-  { label: "Blog", href: "#blog" },
+  { label: "Publications", href: "#publications" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -51,12 +53,12 @@ export default function Navbar() {
 
           {/* Desktop nav links - absolutely centered in the bar regardless of
               how wide the name or right-side controls are */}
-          <ul className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+          <ul className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-1/2 -translate-x-1/2">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="relative font-body font-medium text-ink dark:text-washi hover:text-blade dark:hover:text-blade-light transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.75 after:w-0 after:bg-blade dark:after:bg-blade-light hover:after:w-full after:transition-all"
+                  className="relative font-body font-medium text-sm lg:text-base text-ink dark:text-washi hover:text-blade dark:hover:text-blade-light transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.75 after:w-0 after:bg-blade dark:after:bg-blade-light hover:after:w-full after:transition-all"
                 >
                   {link.label}
                 </a>
@@ -103,7 +105,7 @@ export default function Navbar() {
               <X size={20} strokeWidth={2.5} />
             </button>
           </div>
-          <ul className="flex-1 flex flex-col items-center justify-center gap-6 sm:gap-8 px-6">
+          <ul className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-7 px-6 overflow-y-auto py-6">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <a

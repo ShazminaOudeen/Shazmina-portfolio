@@ -26,7 +26,7 @@ export default function About() {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
             <Image
-              src="/images/about_cat.png"
+              src="/images/about_Cat.png"
               alt="About section illustration"
               fill
               className="object-contain drop-shadow-xl"

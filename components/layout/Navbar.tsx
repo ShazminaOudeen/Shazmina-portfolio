@@ -89,7 +89,7 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-60 bg-washi dark:bg-ink flex flex-col transition-colors">
           <div className="flex items-center justify-between gap-3 px-4 h-16 border-b-4 border-ink dark:border-washi shrink-0">
-            <span className="font-heading text-sm xs:text-base sm:text-lg text-ink dark:text-washi tracking-wide truncate">
+            <span className="font-heading text-xl sm:text-2xl text-ink dark:text-washi tracking-wide truncate">
               {data.personal.name.toUpperCase()}
             </span>
             <button
@@ -100,7 +100,7 @@ export default function Navbar() {
               <X size={20} strokeWidth={2.5} />
             </button>
           </div>
-          <ul className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-7 px-6 overflow-y-auto py-6">
+          <ul className="flex flex-col items-center gap-5 sm:gap-6 px-6 overflow-y-auto pt-10 sm:pt-14 pb-6">
             {NAV_LINKS.map((link, i) => (
               <li
                 key={link.href}
@@ -116,7 +116,7 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
-            <li className="mt-2">
+            <li className="mt-4">
               <a
                 href={data.personal.cv}
                 download

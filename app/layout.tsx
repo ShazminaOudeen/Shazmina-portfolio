@@ -19,8 +19,11 @@ const plexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Shazmina | Portfolio",
+  title: "Shazmina Oudeen | Portfolio",
   description: "Frontend developer portfolio",
+  other: {
+    "color-scheme": "light dark",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -30,6 +33,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={cn("h-full", "antialiased", archivoBlack.variable, plexSans.variable)}
     >
+      <head>
+        {/* Tells mobile browsers (Samsung Internet, some Chrome versions)
+            that this site explicitly handles both light and dark mode
+            itself - without this, some browsers auto-force-invert colors
+            based on the phone's system theme, ignoring the site's own
+            toggle entirely. */}
+        <meta name="color-scheme" content="light dark" />
+      </head>
       <body className="min-h-full flex flex-col font-body">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           {children}

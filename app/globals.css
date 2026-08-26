@@ -32,6 +32,7 @@
   --border-color: var(--color-ink);
   --accent: var(--color-blade);
   --shadow-color: var(--color-ink);
+  color-scheme: light;
 }
 
 .dark {
@@ -41,6 +42,7 @@
   --border-color: var(--color-washi);
   --accent: var(--color-blade-light);
   --shadow-color: var(--color-blade-light);
+  color-scheme: dark;
 }
 
 body {

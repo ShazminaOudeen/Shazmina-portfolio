@@ -45,7 +45,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex items-center gap-3 mb-4"
+          className="flex items-center justify-center gap-3 mb-4"
         >
           <span className="w-3 h-3 bg-blade shrink-0" />
           <h2 className="font-heading text-3xl md:text-4xl text-ink dark:text-washi">
@@ -58,7 +58,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="font-body text-ink/75 dark:text-washi/75 mb-10 max-w-lg leading-relaxed"
+          className="font-body text-ink/75 dark:text-washi/75 mb-10 max-w-lg mx-auto text-center leading-relaxed"
         >
           Interested in working together, or just want to connect? Send a
           message below and I&apos;ll get back to you soon.
@@ -90,7 +90,7 @@ export default function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 className="h-12 px-4 border-2 border-ink dark:border-washi bg-washi dark:bg-ink text-ink dark:text-washi font-body focus:outline-none focus:border-blade dark:focus:border-blade-light transition-colors"
-                placeholder="Jane Recruiter"
+                placeholder="your name"
               />
             </div>
 
@@ -109,7 +109,7 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 className="h-12 px-4 border-2 border-ink dark:border-washi bg-washi dark:bg-ink text-ink dark:text-washi font-body focus:outline-none focus:border-blade dark:focus:border-blade-light transition-colors"
-                placeholder="jane@company.com"
+                placeholder="your email"
               />
             </div>
 

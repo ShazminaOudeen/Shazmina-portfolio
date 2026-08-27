@@ -30,10 +30,6 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
   const hasMultiple = images.length > 1;
   const youtubeId = getYoutubeId(project.youtubeLink);
 
-  // If someone lands on this page directly (deep link, refresh, new tab)
-  // rather than clicking through from the homepage, the Preloader's own
-  // "already played" flag never got set - mark it here too, so navigating
-  // back to the homepage afterward doesn't unexpectedly replay it.
   useEffect(() => {
     sessionStorage.setItem("portfolio-preloader-played", "true");
   }, []);
@@ -42,7 +38,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
   const prevImg = () => setImgIndex((i) => (i - 1 + images.length) % images.length);
 
   return (
-    <main className="min-h-screen bg-washi dark:bg-ink pt-24 md:pt-28 pb-24 px-4 md:px-8 transition-colors">
+    <main className="min-h-screen bg-washi dark:bg-ink pt-8 md:pt-12 pb-24 px-4 md:px-8 transition-colors">
       <div className="max-w-4xl mx-auto">
         {/* Back link */}
         <Link
@@ -64,7 +60,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
           transition={{ duration: 0.5 }}
           className="border-2 border-ink dark:border-washi bg-surface dark:bg-[#161616] shadow-brutal p-6 md:p-8 mb-8"
         >
-          <h1 className="font-heading text-3xl md:text-5xl text-ink dark:text-washi mb-4">
+          <h1 className="font-heading text-2xl md:text-4xl text-ink dark:text-washi mb-4">
             {project.title}
           </h1>
 
@@ -147,7 +143,6 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
               )}
             </div>
 
-            {/* Thumbnail strip - lets visitors jump to any image directly */}
             {hasMultiple && (
               <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
                 {images.map((img, i) => (
@@ -168,7 +163,6 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
           </motion.div>
         )}
 
-        {/* Embedded YouTube demo video, if provided */}
         {youtubeId && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -191,7 +185,6 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
           </motion.div>
         )}
 
-        {/* Full description / write-up */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

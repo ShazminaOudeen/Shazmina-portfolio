@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import {
   ArrowLeft,
   ExternalLink,
@@ -29,6 +29,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
   const images = project.images ?? [];
   const hasMultiple = images.length > 1;
   const youtubeId = getYoutubeId(project.youtubeLink);
+  const router = useRouter();
 
   useEffect(() => {
     sessionStorage.setItem("portfolio-preloader-played", "true");
@@ -37,12 +38,25 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
   const nextImg = () => setImgIndex((i) => (i + 1) % images.length);
   const prevImg = () => setImgIndex((i) => (i - 1 + images.length) % images.length);
 
+  // Uses browser history so "Back" returns to wherever the visitor
+  // actually came from (the homepage #projects section, or the full
+  // /projects listing page) instead of always jumping to one fixed spot.
+  // Falls back to the homepage if there's no usable history (e.g. someone
+  // opened this page directly via a shared link).
+  const goBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/#projects");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-washi dark:bg-ink pt-8 md:pt-12 pb-24 px-4 md:px-8 transition-colors">
       <div className="max-w-4xl mx-auto">
-        {/* Back link */}
-        <Link
-          href="/#projects"
+        {/* Back button - uses browser history, see goBack() above */}
+        <button
+          onClick={goBack}
           className="inline-flex items-center gap-2 font-body font-semibold text-sm text-ink dark:text-washi hover:text-blade dark:hover:text-blade-light transition-colors mb-6 group"
         >
           <ArrowLeft
@@ -51,7 +65,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             className="group-hover:-translate-x-1 transition-transform"
           />
           Back to Projects
-        </Link>
+        </button>
 
         {/* Header block - bordered like a card, matches site language */}
         <motion.div

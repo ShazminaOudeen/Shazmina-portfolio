@@ -1,23 +1,24 @@
 "use client";
 
-import { useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ProjectCard, { Project } from "@/components/ui/ProjectCard";
 import data from "@/content/data.json";
 
-export default function Projects() {
-  const projects = data.projects as Project[];
-  const scrollRef = useRef<HTMLDivElement>(null);
+const FEATURED_COUNT = 6;
 
-  const scroll = (direction: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const amount = 340; // roughly one card width + gap
-    scrollRef.current.scrollBy({
-      left: direction === "left" ? -amount : amount,
-      behavior: "smooth",
-    });
-  };
+export default function Projects() {
+  const allProjects = data.projects as (Project & { featured?: boolean })[];
+
+  // Show projects explicitly marked "featured": true in data.json. If none
+  // are marked, fall back to the first few so the homepage still has
+  // something to show without extra setup.
+  const featured = allProjects.some((p) => p.featured)
+    ? allProjects.filter((p) => p.featured)
+    : allProjects.slice(0, FEATURED_COUNT);
+
+  const hasMore = allProjects.length > featured.length;
 
   return (
     <section
@@ -25,59 +26,48 @@ export default function Projects() {
       className="relative py-14 md:py-20 px-4 md:px-8 bg-washi dark:bg-ink transition-colors"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Section heading + scroll arrows */}
+        {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex items-center justify-between mb-10"
+          className="flex items-center gap-3 mb-10"
         >
-          <div className="flex items-center gap-3">
-            <span className="w-3 h-3 bg-blade shrink-0" />
-            <h2 className="font-heading text-3xl md:text-4xl text-ink dark:text-washi">
-              Projects
-            </h2>
-          </div>
-
-          {projects && projects.length > 0 && (
-            <div className="hidden sm:flex items-center gap-2">
-              <button
-                onClick={() => scroll("left")}
-                aria-label="Scroll left"
-                className="w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-washi text-ink dark:text-washi hover:bg-blade hover:border-blade hover:text-washi transition-colors press-effect"
-              >
-                <ChevronLeft size={18} strokeWidth={2.5} />
-              </button>
-              <button
-                onClick={() => scroll("right")}
-                aria-label="Scroll right"
-                className="w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-washi text-ink dark:text-washi hover:bg-blade hover:border-blade hover:text-washi transition-colors press-effect"
-              >
-                <ChevronRight size={18} strokeWidth={2.5} />
-              </button>
-            </div>
-          )}
+          <span className="w-3 h-3 bg-blade shrink-0" />
+          <h2 className="font-heading text-3xl md:text-4xl text-ink dark:text-washi">
+            Projects
+          </h2>
         </motion.div>
 
-        {projects && projects.length > 0 ? (
-          /* Horizontal scroll carousel - cards keep a fixed width and sit
-             side by side, scrollable via drag/swipe or the arrow buttons
-             above. snap-x makes it settle cleanly on each card rather than
-             stopping at an awkward halfway point. */
-          <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-thin"
-          >
-            {projects.map((project, i) => (
-              <div
-                key={project.slug}
-                className="snap-start shrink-0 w-70 sm:w-[320px] md:w-85"
+        {featured.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featured.map((project, i) => (
+                <ProjectCard key={project.slug} project={project} delay={i * 0.08} />
+              ))}
+            </div>
+
+            {/* Only shows if there are more projects than what's featured
+                here - links to the full /projects listing page */}
+            {hasMore && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="flex justify-center mt-10"
               >
-                <ProjectCard project={project} delay={i * 0.08} />
-              </div>
-            ))}
-          </div>
+                <Link
+                  href="/projects"
+                  className="flex items-center gap-2 px-6 h-12 border-2 border-ink dark:border-washi bg-ink dark:bg-washi text-washi dark:text-ink font-body font-semibold shadow-brutal press-effect"
+                >
+                  View All Projects
+                  <ArrowRight size={18} strokeWidth={2.5} />
+                </Link>
+              </motion.div>
+            )}
+          </>
         ) : (
           <p className="font-body text-ink/60 dark:text-washi/60">
             Projects coming soon.

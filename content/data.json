@@ -35,24 +35,24 @@
   }
 ],
   "certifications": [
-    {
-      "title": "Responsive Web Design",
-      "org": "freeCodeCamp",
-      "dateRange": "2025",
-      "description": "Certificate covering HTML, CSS, and responsive layout techniques.",
-      "image": "/images/cert-rwd.jpg",
-      "link": "https://freecodecamp.org/certification/..."
-    }
-  ],
-  "achievements": [
-    {
-      "title": "Dean's List",
-      "org": "Your University",
-      "dateRange": "2023 - 2025",
-      "description": "Awarded for academic excellence, 4 semesters.",
-      "image": "/images/deans-list-cert.jpg",
-      "link": ""
-    },
+  {
+    "title": "Responsive Web Design",
+    "org": "freeCodeCamp",
+    "dateRange": "2025",
+    "description": "Certificate covering HTML, CSS, and responsive layout techniques.",
+    "images": ["/images/cert-rwd.jpg"],
+    "link": "https://freecodecamp.org/certification/..."
+  }
+],
+"achievements": [
+  {
+    "title": "Dean's List",
+    "org": "Your University",
+    "dateRange": "2023 - 2025",
+    "description": "Awarded for academic excellence, 4 semesters.",
+    "images": ["/images/deans-list-cert.jpg"],
+    "link": ""
+  },
     {
       "title": "University Scholarship",
       "org": "Your University",
@@ -92,7 +92,8 @@
   ],
   "youtubeLink": "https://youtube.com/watch?v=yourVideoId",
   "liveLink": "https://your-live-url.vercel.app",
-  "repoLink": "https://github.com/ShazminaOudeen/Shazmina-portfolio"
+  "repoLink": "https://github.com/ShazminaOudeen/Shazmina-portfolio",
+  "featured": true
 }
   
 ],

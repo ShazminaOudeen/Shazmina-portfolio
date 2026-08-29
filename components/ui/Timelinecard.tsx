@@ -82,7 +82,7 @@ export default function TimelineCard({ entry, delay = 0 }: TimelineCardProps) {
         </div>
       )}
 
-      <div className="flex-1 p-5 flex flex-col">
+      <div className="flex-1 p-5 flex flex-col min-h-45">
         <div className="flex items-start justify-between gap-2">
           <h4 className="font-heading text-lg text-ink dark:text-washi">
             {entry.title}
@@ -132,7 +132,6 @@ export default function TimelineCard({ entry, delay = 0 }: TimelineCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.45, delay }}
-      className="h-full"
     >
       {entry.link ? (
         <a href={entry.link} target="_blank" rel="noopener noreferrer" className="block h-full">

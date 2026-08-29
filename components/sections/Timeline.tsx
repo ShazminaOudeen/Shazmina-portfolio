@@ -1,14 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import TimelineCard, { TimelineEntry } from "@/components/ui/Timelinecard";
 import EducationCard from "@/components/ui/EducationCard";
 import data from "@/content/data.json";
 
-// Only categories with at least one entry in data.json will show as tabs.
-// No work experience yet? Just leave "work" as an empty array (or omit it)
-// in data.json and this tab won't appear at all.
 const CATEGORY_LABELS: Record<string, string> = {
   work: "Work",
   education: "Education",
@@ -25,8 +23,11 @@ const CATEGORY_ORDER = [
   "volunteering",
 ];
 
+const SCROLL_THRESHOLD = 6;
+
 export default function Timeline() {
   const timeline = data.timeline as Record<string, TimelineEntry[]>;
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const availableCategories = CATEGORY_ORDER.filter(
     (key) => timeline[key] && timeline[key].length > 0
@@ -36,9 +37,18 @@ export default function Timeline() {
 
   if (availableCategories.length === 0) return null;
 
-  // Education gets a long-format stacked layout; everything else uses the
-  // compact grid-tile layout with image galleries
   const isEducation = activeTab === "education";
+  const entries = timeline[activeTab] ?? [];
+  const needsScroll = !isEducation && entries.length > SCROLL_THRESHOLD;
+
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const amount = 340;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section
@@ -46,18 +56,40 @@ export default function Timeline() {
       className="relative py-14 md:py-20 px-4 md:px-8 bg-washi dark:bg-ink transition-colors"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Section heading */}
+        {/* Section heading + scroll arrows (only when this tab has more
+            than 6 entries) */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex items-center gap-3 mb-10"
+          className="flex items-center justify-between mb-10"
         >
-          <span className="w-3 h-3 bg-blade shrink-0" />
-          <h2 className="font-heading text-3xl md:text-4xl text-ink dark:text-washi">
-            Experience
-          </h2>
+          <div className="flex items-center gap-3">
+            <span className="w-3 h-3 bg-blade shrink-0" />
+            <h2 className="font-heading text-3xl md:text-4xl text-ink dark:text-washi">
+              Experience
+            </h2>
+          </div>
+
+          {needsScroll && (
+            <div className="hidden sm:flex items-center gap-2">
+              <button
+                onClick={() => scroll("left")}
+                aria-label="Scroll left"
+                className="w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-washi text-ink dark:text-washi hover:bg-blade hover:border-blade hover:text-washi transition-colors press-effect"
+              >
+                <ChevronLeft size={18} strokeWidth={2.5} />
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                aria-label="Scroll right"
+                className="w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-washi text-ink dark:text-washi hover:bg-blade hover:border-blade hover:text-washi transition-colors press-effect"
+              >
+                <ChevronRight size={18} strokeWidth={2.5} />
+              </button>
+            </div>
+          )}
         </motion.div>
 
         {/* Category tabs - underline style */}
@@ -84,28 +116,58 @@ export default function Timeline() {
           ))}
         </div>
 
-        {/* Entries for the active tab - layout switches based on category */}
+        {/* Entries for the active tab */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className={
-              isEducation
-                ? "flex flex-col gap-4"
-                : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            }
-          >
-            {timeline[activeTab]?.map((entry, i) =>
-              isEducation ? (
+          {isEducation ? (
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="flex flex-col gap-4"
+            >
+              {entries.map((entry, i) => (
                 <EducationCard key={`${entry.title}-${i}`} entry={entry} delay={i * 0.06} />
-              ) : (
+              ))}
+            </motion.div>
+          ) : needsScroll ? (
+            /* More than 6 entries: simple single-row horizontal scroll.
+               Cards keep their natural height (no h-full stretching),
+               scrollbar hidden, navigation via drag/swipe or the arrows
+               above. */
+            <motion.div
+              key={activeTab}
+              ref={scrollRef}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="flex items-start gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide pb-2"
+            >
+              {entries.map((entry, i) => (
+                <div
+                  key={`${entry.title}-${i}`}
+                  className="snap-start shrink-0 w-70 sm:w-77.5 md:w-[320px]"
+                >
+                  <TimelineCard entry={entry} delay={i * 0.06} />
+                </div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start"
+            >
+              {entries.map((entry, i) => (
                 <TimelineCard key={`${entry.title}-${i}`} entry={entry} delay={i * 0.06} />
-              )
-            )}
-          </motion.div>
+              ))}
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </section>

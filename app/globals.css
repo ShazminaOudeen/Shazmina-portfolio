@@ -82,3 +82,11 @@ h1, h2, h3, h4, h5, h6 {
   transform: translate(4px, 4px);
   box-shadow: 0px 0px 0px 0px var(--shadow-color);
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

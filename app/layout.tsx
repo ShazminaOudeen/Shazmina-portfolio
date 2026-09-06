@@ -4,8 +4,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/lib/theme";
 
-
-
 const archivoBlack = Archivo_Black({
   weight: "400",
   subsets: ["latin"],
@@ -34,11 +32,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={cn("h-full", "antialiased", archivoBlack.variable, plexSans.variable)}
     >
       <head>
-        {/* Tells mobile browsers (Samsung Internet, some Chrome versions)
-            that this site explicitly handles both light and dark mode
-            itself - without this, some browsers auto-force-invert colors
-            based on the phone's system theme, ignoring the site's own
-            toggle entirely. */}
         <meta name="color-scheme" content="light dark" />
       </head>
       <body className="min-h-full flex flex-col font-body">

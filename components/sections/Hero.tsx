@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
-import { Download, ArrowRight, ArrowDown, Mail } from "lucide-react";
+import { Download, ArrowRight, Mail, Star } from "lucide-react";
 import data from "@/content/data.json";
 
 const GithubIcon = ({ size = 20 }: { size?: number }) => (
@@ -18,42 +19,55 @@ const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
 );
 
 const SOCIAL_LINKS = [
-  {
-    label: "GitHub",
-    href: data.personal.github || "#",
-    Icon: GithubIcon,
-  },
-  {
-    label: "LinkedIn",
-    href: data.personal.linkedin || "#",
-    Icon: LinkedinIcon,
-  },
-  {
-    label: "Email",
-    href: data.personal.email ? `mailto:${data.personal.email}` : "#",
-    Icon: Mail,
-  },
+  { label: "GitHub", href: data.personal.github || "#", Icon: GithubIcon },
+  { label: "LinkedIn", href: data.personal.linkedin || "#", Icon: LinkedinIcon },
+  { label: "Email", href: data.personal.email ? `mailto:${data.personal.email}` : "#", Icon: Mail },
 ];
 
 export default function Hero() {
+  // Subtle mouse-tracking tilt on the photo staging area - a small,
+  // professional touch common on polished dev portfolios. Springs back
+  // to neutral smoothly when the cursor leaves.
+  const tiltRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [6, -6]), {
+    stiffness: 150,
+    damping: 20,
+  });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), {
+    stiffness: 150,
+    damping: 20,
+  });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = tiltRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
     <section
       id="hero"
-      className="relative min-h-[90vh] flex items-center justify-center px-4 md:px-8 overflow-hidden bg-washi dark:bg-ink transition-colors"
+      className="relative min-h-[85vh] flex items-center justify-center px-4 md:px-8 py-16 overflow-hidden bg-washi dark:bg-ink transition-colors"
     >
-      {/* Subtle dot-grid background texture */}
+      {/* Dot-grid background texture */}
       <div
         className="absolute inset-0 opacity-[0.06] dark:opacity-[0.08] pointer-events-none"
         style={{
-          backgroundImage:
-            "radial-gradient(currentColor 1.5px, transparent 1.5px)",
+          backgroundImage: "radial-gradient(currentColor 1.5px, transparent 1.5px)",
           backgroundSize: "28px 28px",
           color: "var(--foreground)",
         }}
       />
 
       <div className="relative max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-        {/* Text content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -64,21 +78,28 @@ export default function Hero() {
             initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-body font-semibold text-blade dark:text-blade-light tracking-[0.2em] uppercase text-sm mb-3"
+            className="flex items-center gap-2 justify-center md:justify-start font-body font-semibold text-blade dark:text-blade-light tracking-[0.2em] uppercase text-sm mb-4"
           >
+            <Star size={14} fill="currentColor" />
             {data.personal.role}
+            <Star size={14} fill="currentColor" />
           </motion.p>
 
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl text-ink dark:text-washi leading-tight mb-4">
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl text-ink dark:text-washi leading-[1.1] mb-5 -rotate-1">
             {data.personal.name}
           </h1>
 
-          <p className="font-body text-base md:text-lg text-ink/80 dark:text-washi/80 max-w-md mx-auto md:mx-0 mb-6">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: "4rem" }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            className="h-1 bg-blade mx-auto md:mx-0 mb-5"
+          />
+
+          <p className="font-body text-base md:text-lg text-ink/80 dark:text-washi/80 max-w-md mx-auto md:mx-0 mb-7">
             {data.personal.tagline}
           </p>
 
-          {/* Social icons - placed here since many visitors never scroll
-              down to the footer where these links normally live */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -104,7 +125,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 justify-center md:justify-start">
             <motion.a
-              whileHover={{ x: 2, y: 2 }}
+              whileHover={{ x: 2, y: 2, rotate: -1 }}
               href="#projects"
               className="flex items-center gap-2 px-6 h-12 border-2 border-ink dark:border-washi bg-ink dark:bg-washi text-washi dark:text-ink font-body font-semibold shadow-brutal press-effect"
             >
@@ -112,7 +133,7 @@ export default function Hero() {
               <ArrowRight size={18} strokeWidth={2.5} />
             </motion.a>
             <motion.a
-              whileHover={{ x: 2, y: 2 }}
+              whileHover={{ x: 2, y: 2, rotate: 1 }}
               href={data.personal.cv}
               download
               target="_blank"
@@ -125,30 +146,76 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Cutout photo - transparent background, no frame, floats over
-            bold geometric shapes for a neobrutalist "sticker" feel */}
-        <div className="order-1 md:order-2 relative flex justify-center items-end h-80 sm:h-95 md:h-110">
-          {/* Background shapes - animate in first, behind the photo */}
+        {/* Photo staging area - vinyl record disc behind the photo,
+            clean rotated card (no fragile clip-paths), backstage-pass
+            tag accent */}
+        <motion.div
+          ref={tiltRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          style={{ rotateX, rotateY, transformPerspective: 800 }}
+          className="order-1 md:order-2 relative flex justify-center items-end h-80 sm:h-95 md:h-110"
+        >
+          {/* Vinyl record disc - pure CSS, concentric rings + center label */}
           <motion.div
-            initial={{ scale: 0, rotate: -15, opacity: 0 }}
-            animate={{ scale: 1, rotate: -8, opacity: 1 }}
+            initial={{ scale: 0, rotate: 0, opacity: 0 }}
+            animate={{ scale: 1, rotate: 360, opacity: 1 }}
+            transition={{
+              scale: { duration: 0.6, ease: "easeOut" },
+              opacity: { duration: 0.6 },
+              rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+            }}
+            className="absolute w-60 h-60 sm:w-70 sm:h-70 md:w-80 md:h-80 rounded-full right-0 top-2 md:right-4"
+            style={{
+              background:
+                "repeating-radial-gradient(circle, #0A0A0A 0px, #0A0A0A 3px, #1a1a1a 3px, #1a1a1a 6px)",
+              boxShadow: "0 0 0 4px var(--border-color)",
+            }}
+          >
+            {/* Center label */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-blade border-2 border-washi flex items-center justify-center">
+                <div className="w-2.5 h-2.5 rounded-full bg-washi" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Clean rotated backdrop card - simple, no clip-path */}
+          <motion.div
+            initial={{ scale: 0, rotate: 0, opacity: 0 }}
+            animate={{ scale: 1, rotate: -5, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="absolute w-55 h-55 sm:w-65 sm:h-65 md:w-75 md:h-75 bg-blade border-4 border-ink dark:border-washi"
-          />
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-            className="absolute w-45 h-45 sm:w-55 sm:h-55 md:w-65 md:h-65 rounded-full border-4 border-ink dark:border-washi bg-transparent top-0 right-4 md:right-0"
-          />
-          {/* Small accent square, floats independently */}
-          <motion.div
-            className="absolute w-6 h-6 md:w-8 md:h-8 bg-ink dark:bg-washi top-6 left-2 md:left-8"
-            animate={{ y: [0, -10, 0], rotate: [0, 8, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute w-56 h-56 sm:w-66 sm:h-66 md:w-76 md:h-76 bg-blade border-4 border-ink dark:border-washi shadow-brutal-lg"
           />
 
-          {/* Cutout photo - rises up and fades in, then gently floats */}
+          {/* Starburst flash accent - proper inline SVG star, not clip-path */}
+          <motion.svg
+            viewBox="0 0 100 100"
+            className="absolute w-16 h-16 md:w-20 md:h-20 top-2 left-0 md:left-4"
+            animate={{ rotate: [0, 10, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <path
+              d="M50 0 L61 35 L98 35 L68 57 L79 92 L50 70 L21 92 L32 57 L2 35 L39 35 Z"
+              fill="var(--color-gold)"
+              stroke="var(--border-color)"
+              strokeWidth="3"
+            />
+          </motion.svg>
+
+          {/* Backstage pass tag - small rotated label near the bottom */}
+          <motion.div
+            initial={{ opacity: 0, x: -10, rotate: 0 }}
+            animate={{ opacity: 1, x: 0, rotate: -8 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="absolute bottom-2 left-0 md:-left-4 z-20 px-3 py-1.5 bg-washi dark:bg-ink border-2 border-ink dark:border-washi shadow-brutal-sm"
+          >
+            <p className="font-heading text-[10px] tracking-[0.15em] text-ink dark:text-washi whitespace-nowrap">
+              ALL ACCESS
+            </p>
+          </motion.div>
+
+          {/* Cutout photo */}
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -176,19 +243,8 @@ export default function Hero() {
               )}
             </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.a
-        href="#about"
-        aria-label="Scroll to About section"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-ink/50 dark:text-washi/50 hover:text-blade dark:hover:text-blade-light transition-colors"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <ArrowDown size={22} strokeWidth={2} />
-      </motion.a>
     </section>
   );
 }

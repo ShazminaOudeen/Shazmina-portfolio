@@ -25,7 +25,6 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Hero() {
-  // Subtle mouse-tracking tilt on the photo area
   const tiltRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -55,19 +54,7 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[90vh] flex items-center justify-center px-4 md:px-8 py-16 overflow-hidden bg-washi dark:bg-ink transition-colors"
     >
-      {/* Cinematic glow orb behind the subject - large, soft, warm-to-red
-          radial gradient, the main atmospheric element instead of playful
-          decorative shapes */}
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 w-[55vw] h-[55vw] max-w-2xl max-h-2xl rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(200,30,58,0.35) 0%, rgba(200,30,58,0.12) 45%, transparent 70%)",
-          filter: "blur(20px)",
-        }}
-      />
-
-      {/* Fine dot-grid texture, very low opacity */}
+      {/* Fine dot-grid texture */}
       <div
         className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06] pointer-events-none"
         style={{
@@ -77,8 +64,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Vignette - darkens edges slightly in dark mode for a cinematic
-          frame, invisible in light mode */}
+      {/* Vignette - dark mode only */}
       <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-100 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.5)_100%)]" />
 
       <div className="relative max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -98,7 +84,7 @@ export default function Hero() {
             {data.personal.role}
           </motion.p>
 
-          <h1 className="font-heading uppercase text-4xl sm:text-5xl md:text-6xl text-ink dark:text-washi leading-[1.05] mb-5">
+          <h1 className="font-heading font-bold uppercase text-5xl sm:text-6xl md:text-7xl text-ink dark:text-washi leading-[1.02] mb-5 tracking-wide">
             {data.personal.name}
           </h1>
 
@@ -159,37 +145,83 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Photo - sits directly in front of the glow orb, no decorative
-            shapes around it, tilts subtly on mouse move */}
-        <motion.div
-          ref={tiltRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{ rotateX, rotateY, transformPerspective: 800 }}
-          className="order-1 md:order-2 relative flex justify-center items-end h-80 sm:h-95 md:h-110"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="relative z-10 w-65 sm:w-[320px] md:w-95 h-full"
-          >
-            {data.personal.photo ? (
-              <Image
-                src={data.personal.photo}
-                alt={data.personal.name}
-                fill
-                sizes="(max-width: 768px) 260px, 380px"
-                className="object-contain object-bottom drop-shadow-2xl"
-                priority
-              />
-            ) : (
-              <div className="w-full h-full flex items-end justify-center pb-4 text-ink/30 dark:text-washi/30 font-heading text-sm">
-                CUTOUT PHOTO
-              </div>
-            )}
-          </motion.div>
-        </motion.div>
+      {/* Photo staging area - circle.png backdrop behind the subject,
+    like a poster/key-art backdrop, plus a glow layered on top of the circle */}
+<motion.div
+  ref={tiltRef}
+  onMouseMove={handleMouseMove}
+  onMouseLeave={handleMouseLeave}
+  style={{ rotateX, rotateY, transformPerspective: 800 }}
+  className="order-1 md:order-2 relative flex justify-center items-end h-80 sm:h-95 md:h-110"
+>{/* Circle image backdrop */}
+{/* Circle image backdrop */}
+<motion.div
+  initial={{ scale: 0, opacity: 0 }}
+  animate={{ scale: 1, opacity: 1 }}
+  transition={{ duration: 0.7, ease: "easeOut" }}
+  className="absolute -bottom-20 w-110 h-110 sm:w-120 sm:h-120 md:w-135 md:h-135"
+>
+  <Image
+    src="/images/circle.png"
+    alt=""
+    fill
+    sizes="(max-width: 768px) 360px, 460px"
+    className="object-contain object-bottom"
+    priority
+  />
+</motion.div>
+
+{/* Glow layered on top of the circle image */}
+<div
+  className="absolute -bottom-8 w-90 h-90 sm:w-105 sm:h-105 md:w-115 md:h-115 rounded-full pointer-events-none mix-blend-screen scale-x-125"
+  style={{
+    background:
+      "radial-gradient(circle, rgba(255,20,40,0.55) 0%, rgba(220,10,30,0.35) 35%, rgba(200,30,58,0.15) 55%, transparent 70%)",
+    filter: "blur(24px)",
+  }}
+/>
+
+{/* Wider ambient bloom behind the whole staging area */}
+<div
+  className="absolute bottom-0 w-110 h-110 sm:w-125 sm:h-125 md:w-135 md:h-135 rounded-full pointer-events-none -z-10"
+  style={{
+    background:
+      "radial-gradient(circle, rgba(200,30,58,0.25) 0%, rgba(200,30,58,0.08) 45%, transparent 70%)",
+    filter: "blur(40px)",
+  }}
+/>
+
+  {/* Thin corner brackets on the photo - small HUD/tech accent */}
+  <div className="absolute z-10 w-65 sm:w-[320px] md:w-95 h-full pointer-events-none">
+    <span className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-ink dark:border-washi" />
+    <span className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-ink dark:border-washi" />
+    <span className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-ink dark:border-washi" />
+    <span className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-ink dark:border-washi" />
+  </div>
+
+  {/* Cutout photo */}
+  <motion.div
+    initial={{ opacity: 0, y: 60, scale: 0.95 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+    className="relative z-10 w-65 sm:w-[320px] md:w-95 h-full"
+  >
+    {data.personal.photo ? (
+      <Image
+        src={data.personal.photo}
+        alt={data.personal.name}
+        fill
+        sizes="(max-width: 768px) 260px, 380px"
+        className="object-contain object-bottom drop-shadow-2xl"
+        priority
+      />
+    ) : (
+      <div className="w-full h-full flex items-end justify-center pb-4 text-ink/30 dark:text-washi/30 font-heading text-sm">
+        CUTOUT PHOTO
+      </div>
+    )}
+  </motion.div>
+</motion.div>
       </div>
     </section>
   );
